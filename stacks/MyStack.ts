@@ -1,11 +1,20 @@
-import { StackContext, Api } from "sst/constructs";
+import { StackContext, Api, Table } from "sst/constructs";
 
 export function API({ stack }: StackContext) {
+  const table = new Table(stack, "Notes", {
+    fields: {
+      userId: "string",
+      noteId: "string",
+    },
+    primaryIndex: { partitionKey: "noteId", sortKey: "userId" },
+  });
+
   const api = new Api(stack, "api", {
     routes: {
       "GET /": "packages/functions/src/lambda.handler",
-      "GET /todo": "packages/functions/src/todo.list",
-      "POST /todo": "packages/functions/src/todo.create",
+    },
+    defaults: {
+      function: { bind: [table] },
     },
   });
 
