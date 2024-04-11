@@ -6,8 +6,7 @@ export default {
     return {
       name: "demo-sst",
       region: "us-east-1",
-      profile:
-        input.stage === "prod" ? "ramiro-strata-prod" : "ramiro-strata-dev",
+      profile: input.stage === "prod" ? "strata-demo-prod" : "strata-demo-dev",
     };
   },
   stacks(app) {
